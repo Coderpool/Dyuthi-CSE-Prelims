@@ -1,0 +1,192 @@
+{% extends "basetest.html" %}
+{%block content%}
+{% include "navtest.html" %}
+    <script type="text/javascript" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+	$(function() {
+        	$('#timer').countdown({
+	        date: +(new Date) + 60000*{{time}},
+		render: function(data) {$(this.el).text("Time remaining "+this.leadingZeros(data.min,2)+" : "+this.leadingZeros(data.sec, 2))},
+ 		onEnd: function(){ $('#test').submit() }
+		});
+	});
+    $(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+    $(document).ready(function(){
+    $(this).bind("contextmenu", function(e) {
+        e.preventDefault();
+    });
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    //Default Action
+    $(".tab_content").hide(); //Hide all content
+    $("ul.tabs li:first").addClass("active").show(); //Activate first tab
+    $(".tab_content:first").show(); //Show first tab content
+    //On Click Event
+    $("ul.tabs li").click(function() {
+        $("ul.tabs li").removeClass("active"); //Remove any "active" class
+        $(this).addClass("active"); //Add "active" class to selected tab
+        $(".tab_content").hide(); //Hide all tab content
+        var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+        $(activeTab).fadeIn(); //Fade in the active content
+        return false;
+    });
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#tabs").tabs();
+    $("#prevBtn").bind("click", prevOfferTab);
+    $("#nextBtn").bind("click", nextOfferTab);
+});
+function getSelectedTabIndex(change)  {
+	var $tabs = $('#tabs').tabs();
+	var selected = $tabs.tabs('option', 'selected') + change;
+	if (selected == 0) {
+	$("#prevBtn").hide();
+	}
+	else {
+	$("#prevBtn").show();
+	}
+	var tabsCount = this.$('#tabs').tabs('length') -1;
+	if (selected == tabsCount) {
+	$("#nextBtn").hide();
+	}
+	else {
+	$("#nextBtn").show();
+	}
+	return selected;
+}
+function nextOfferTab()  {
+    console.log('nxt');
+	var newTabIndex = parseInt(getSelectedTabIndex(1));
+	$('#tabs').tabs('select', newTabIndex);
+}
+function prevOfferTab()  {
+	var newTabIndex = parseInt(getSelectedTabIndex(-1));
+	$('#tabs').tabs('select', newTabIndex);
+}
+</script>
+</br></br></br>
+</br></br></br>
+
+
+
+
+<div class="main">
+
+	<div class="main-inner">
+<form method="POST" action="/evaluate"class= "well" id="test">{%csrf_token%}
+<input type='hidden' name='event' value='{{event}}' >
+	    <div class="container">
+
+    	<div class="row">
+    	<div class="span12">
+
+				<div class="widget widget-plain">
+
+					<div class="widget-content">
+
+						<button style="width: 100%;" class="btn btn-large btn-success btn-support-ask" type="submit">Complete Test</button>
+
+
+					</div> <!-- /widget-content -->
+
+				</div> <!-- /widget -->
+
+
+
+			</div> <!-- /span12 -->
+         </div>	</div>
+
+
+
+
+<div class="main">
+
+	<div class="main-inner">
+
+	    <div class="container">
+
+	      <div class="row">
+
+	      	<div class="span12">
+
+	      		<div class="widget ">
+
+	      			<div class="widget-header">
+
+	      				<h3>Questions</h3>
+	  				</div> <!-- /widget-header -->
+
+					<div class="widget-content">
+
+
+
+
+<div class="tabbable">
+  <ul class="tabs nav nav-tabs">
+       {% for i in questions %}
+    <li><a href="#{{ forloop.counter }}">{{ forloop.counter }}</a></li>
+    {%endfor%}
+  </ul>
+
+
+  <div class="tab_container">
+    {% for i in questions %}
+    <div id="{{ forloop.counter }}" class="tab_content">
+
+<font color=green><b><h3>Question {{ forloop.counter }}: </h3> <pre style="border:none;padding-left: 25px; background: transparent;"><h3>{{ i.question }}</h3></pre></b></font>
+			{%for j in i.options %}
+<div ><label class='radio'> <input   type='radio' name='{{ i.id  }}'  value='{{ j }}'><pre style="border:none; padding: 0; font-size: inherit; background: transparent;">{{ j }}</pre></label></div>
+			{%endfor%}
+ <input type='radio' checked="checked" style="visibility:hidden;" id="leave{{ forloop.counter }}" name='{{i.id}}' value='leavethequestion'></input>
+
+<div>
+<label for="leave{{ forloop.counter }}" type="button" class="btn btn-warning">Remove Response</label>
+</div>
+    </div>
+ {%endfor%}
+  </div>
+</div>
+
+
+
+
+
+					</div> <!-- /widget-content -->
+
+				</div> <!-- /widget -->
+
+		    </div> <!-- /span8 -->
+
+
+
+
+	      </div> <!-- /row -->
+
+
+
+		<div class="form-action">
+		<p>
+		  <button style="width: 100%;"class="btn btn-large btn-success btn-support-ask" type="submit">Complete Test</button>
+		</p>
+		</div>
+	</form>
+
+   </div> <!-- /container -->
+
+	</div> <!-- /main-inner -->
+</div> <!-- /main -->
+
+
+
+
+{%endblock%}

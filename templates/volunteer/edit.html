@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{%block content%}
+    {% include "nav.html" %}
+<form class="form-horizontal" action='/addquestion' method="POST" >{%csrf_token%}
+  <fieldset>
+	
+	<input type='hidden' name='formname' value='editform' >
+	<!--- Question-->
+	<div class="control-group">
+      	<label class="control-label"  for="question">Question</label>
+		<div class="controls">
+        		<textarea rows=10 id="question" name="question" placeholder="" class=":required :min_length;4 :max_length;500;span6 input-xxlarge search-query" >{{question.question}} </textarea>
+		</div>
+	</div>
+
+	<!--- Answer -->
+	<div class="control-group">
+      	<label class="control-label"  for="answer">Answer</label>
+		<div class="controls">
+        		<textarea rows=10  id="answer" name="answer" placeholder="" class=":required :min_length;1 :max_length;500;span6 input-xxlarge search-query" >{{question.answer}}  </textarea>
+		</div>
+	</div>
+
+	<!--- Option B -->
+	<div class="control-group">
+      	<label class="control-label"  for="optionB">Option B</label>
+		<div class="controls">
+        		<textarea rows=10  id="optionB" name="optionB" placeholder="" class=":required :min_length;1 :max_length;500;span6 input-xxlarge search-query ">{{question.option_B}}  </textarea>
+		</div>
+	</div>
+	
+	<!--- Option C -->
+	<div class="control-group">
+      	<label class="control-label"  for="optionC">Option C</label>
+		<div class="controls">
+        		<textarea rows=10  id="optionC" name="optionC" placeholder="" class=":required :min_length;1 :max_length;500;span6 input-xxlarge search-query" >{{question.option_C}}  </textarea>
+		</div>
+	</div>
+	<!--- Option D -->
+	<div class="control-group">
+      	<label class="control-label"  for="optionD">Option D</label>
+		<div class="controls">
+        		<textarea rows=10  id="optionD" name="optionD" placeholder="" class=":required :min_length;1 :max_length;500;span6 input-xxlarge search-query" >{{question.option_D}} </textarea>
+		</div>
+	</div>
+
+	<div class="control-group">
+	      	<label class="control-label"  for="set">Select Set </label>
+		<div class="controls">
+			<select class="selectpicker" data-style='btn-danger' id='set' name='set'>
+					{%for i in sets%}		
+					      <option value='{{i.setId}}'>{{i.setname}}</option>
+					{%endfor%}
+			</select>
+		</div>
+	</div>
+	<!-- Button -->
+      <div class="controls">
+        <button class="btn btn-success">Save Question</button>
+      </div>
+    </div>
+
+ </fieldset>
+</form>
+{%endblock%}

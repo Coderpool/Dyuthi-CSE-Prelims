@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{%block content%}
+    {% include "nav.html" %}
+  {% include "exam/rules.html" %}
+	<center>
+	<form class='well' method='POST' action='/test'>{%csrf_token%}
+		<div class="controls">
+		<select class="selectpicker" data-style='btn-danger' id='event' name='event' style="height:40px; width:250px">
+			{%for i in events%}		
+			      <option value='{{i.name}}'>{{i.name}}</option> 
+			{%endfor%}
+		 </select>
+		</div>
+		<font size=4>
+		<div class="controls">
+		        <button class="btn btn-success" style="height:40px; width:200px">Start Test</button>
+		</div>
+		</font>
+	</form>
+	</center>
+{%endblock%}

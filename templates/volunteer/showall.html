@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{%block content%}
+    {% include "nav.html" %}
+	{% for set,questions in questionset.items %}
+		<h3>{{ set }} </h3>
+		{%for i in questions %}
+			<form  method='POST' action='/edit'>{%csrf_token%}
+			<input type='hidden' name='id' value='{{i.id}}' >
+			<pre>				
+				<button class="btn btn-success " style='right:5px;position:absolute;text-align:right'> EDIT </button>
+				<p><h4>{{forloop.counter}}.  {{ i.question }}  <p>
+				Answer : {{i.answer}} <p>
+				B      : {{i.option_B}} <p>
+				C      : {{i.option_C}}<p>
+				D      : {{i.option_D}} <p>
+				</h4>
+			</pre>
+			</form>
+		{% endfor %}
+	{% endfor %}
+{%endblock%}

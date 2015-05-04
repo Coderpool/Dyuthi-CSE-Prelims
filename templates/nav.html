@@ -1,0 +1,35 @@
+
+
+    {% if user.is_authenticated %}
+	<div class="subnavbar">
+
+	<div class="subnavbar-inner">
+
+		<div class="container">
+
+			<ul class="mainnav">
+
+
+
+         <li ><a href='/home'><i class="icon-dashboard"></i><span>Home</span></a></li>
+		{% if user.groups.all.0.name == 'volunteer' %}
+        		<li ><a href='/edit'><i class="icon-plus-sign"></i><span>View & Edit</span> </a></li>
+                <li ><a href='/leaderboard'><i class="icon-list-alt"></i><span>Leader Board</span></a></li>
+		{% endif %}
+        	 <li ><a href='/logout'><i class="icon-user"></i><span>Logout</span></a></li>
+
+
+
+
+
+
+			</ul>
+
+		</div> <!-- /container -->
+
+	</div> <!-- /subnavbar-inner -->
+
+</div> <!-- /subnavbar -->
+
+{% endif %}
+</div> <!-- /navbar -->

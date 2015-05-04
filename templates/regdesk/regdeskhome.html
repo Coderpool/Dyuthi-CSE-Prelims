@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{%block content%}
+{% include "nav.html" %}
+
+    	  <div>
+			{{ message }}
+		</div>
+
+<form class="form-horizontal" action='/adduser' method="POST">{%csrf_token%}
+  <fieldset>
+    <div id="legend">
+      <legend class="">Add user</legend>
+    </div>
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="username">Username</label>
+      <div class="controls">
+        <input type="text" id="username" name="username" placeholder="" class=":required :min_length;4;input-xlarge">
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- Password-->
+      <label class="control-label" for="password">Password</label>
+      <div class="controls">
+        <input type="password" id="password" name="password" placeholder="" class=":required;input-xlarge">
+      </div>
+    </div>
+    <div class="control-group">
+	 <label class="control-label" for="password">Confirm Password</label>
+      <div class="controls">
+        <input type="password" id="confirmpassword" name="password" placeholder="" class=":required :same_as;password;input-xlarge">
+      </div>
+    </div>
+{% for i in events %}
+	<div class="control-group">
+		<label class="control-label" for="event">{{ i.name }}</label>
+		<div class="controls">
+			<input type="checkbox" id='{{i.eventId}}' name='{{i.eventId}}' placeholder="" class="input-xlarge">
+		 </div>
+	</div>
+{% endfor %}
+    <div class="control-group">
+      <!-- Button -->
+      <div class="controls">
+        <button class="btn btn-success">Add user</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+<script>
+$("#username").change(function()
+{
+        $.ajax({
+
+                url:'/user_exist?user='+$('#username').val()
+                }).done(function(data)
+                {
+                    if(data=='0')
+                    {
+                        alert("The user already exists");
+                        $('#username').val('');
+                        $('#username').focus();
+                    }
+                });
+});
+</script>
+
+
+
+
+
+{%endblock%}
+
+
+

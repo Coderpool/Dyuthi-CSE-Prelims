@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{%block content%}
+    {% include "nav.html" %}
+	<head>
+		<meta http-equiv="refresh" content="60" >
+	</head>
+	<div class='well'>
+	<table class='table'>
+		<h1>{{ event.name }} Leader Board<h1>
+		<thead>  
+			<tr>  
+        		    <th><h1>#</h1></th>  
+		            <th><h1>Name</h1></th>  
+        		    <th><h1>Score</h1></th>  
+	        	  </tr>  
+	        </thead>  
+		{%for i in leaders%}
+			<tr>
+				<td> <h3> {{forloop.counter}}</h3></td> 
+				<td> <h3> {{i.user.username}}</h3></td> 
+				<td><h3> {{i.score}} </h3></td>
+			</tr>
+		{%endfor%}
+		</table>
+	</div>
+{%endblock%}

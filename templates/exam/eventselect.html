@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{%block content%}
+{% include "nav.html" %}
+
+	<form class='well' method='GET' action='/leaderboard'>
+		<div class="controls">
+		<select class="selectpicker" data-style='btn-danger' id='event' name='event'>
+			{%for i in events%}		
+			      <option value='{{i.name}}'>{{i.name}}</option>
+			{%endfor%}
+		 </select>
+		</div>
+		<div class="controls">
+		        <button class="btn btn-success">Show Leaderboard</button>
+		</div>
+	</form>
+{%endblock%}
